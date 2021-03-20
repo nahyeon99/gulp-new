@@ -1,0 +1,12 @@
+{
+  "name": "gulpnew",
+  "version": "1.0.0",
+  "description": "Learn Gulp by building an awesome development environment",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nahyeon99/gulp-new.git"
+  },
+  "author": "nahyeon",
+  "license": "ISC"
+}
