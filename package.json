@@ -2,11 +2,22 @@
   "name": "gulpnew",
   "version": "1.0.0",
   "description": "Learn Gulp by building an awesome development environment",
-  "main": "index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nahyeon99/gulp-new.git"
   },
   "author": "nahyeon",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "gulp": "^4.0.2"
+  },
+  "scripts": {
+    "dev": "gulp dev",
+    "build": "gulp build"
+  },
+  "dependencies": {
+    "@babel/core": "^7.13.10",
+    "@babel/preset-env": "^7.13.10",
+    "@babel/register": "^7.13.8"
+  }
 }
