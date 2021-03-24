@@ -1,8 +1,13 @@
-import gulp from "gulp";
+import gulp, { on } from "gulp";
 import gpug from "gulp-pug";
 import del from "del";
 import ws from "gulp-webserver";
 import image from "gulp-image";
+import sass from "gulp-sass";
+import autoprefixer from "gulp-autoprefixer";
+import miniCSS from "gulp-csso";
+
+sass.compiler = require("node-sass");
 
 const routes = {
   pug: {
@@ -13,6 +18,11 @@ const routes = {
   img: {
     src: "src/img/*",
     dest: "build/img",
+  },
+  scss: {
+    watch: "src/scss/**/*.scss",
+    src: "src/scss/style.scss",
+    dest: "build/css",
   },
 };
 
@@ -27,14 +37,28 @@ const webserver = () =>
 const watch = () => {
   gulp.watch(routes.pug.watch, pug);
   gulp.watch(routes.img.src, img);
+  gulp.watch(routes.scss.watch, styles);
 };
 
 const img = () =>
   gulp.src(routes.img.src).pipe(image()).pipe(gulp.dest(routes.img.dest));
 
+const styles = () =>
+  gulp
+    .src(routes.scss.src)
+    .pipe(sass().on("error", sass.logError))
+    .pipe(gulp.dest(routes.scss.dest))
+    .pipe(
+      autoprefixer({
+        cascade: false,
+      })
+    )
+    .pipe(miniCSS())
+    .pipe(gulp.dest(routes.scss.dest));
+
 const prepare = gulp.series([clean, img]);
 
-const assets = gulp.series([pug]);
+const assets = gulp.series([pug, styles]);
 
 // parallel 두가지를 병행해서 진행
 const postDev = gulp.parallel([webserver, watch]);
